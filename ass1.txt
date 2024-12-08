@@ -1,0 +1,161 @@
+show databases;
+use company;
+show tables;
+
+
+desc emp;
+eid	int	NO	PRI		
+ename	varchar(45)	YES			
+age	int	YES			
+salary	int	YES	
+
+1-->select * from emp;
+eid	ename	       age      salary
+501	aasritha	22	40000
+502	aakash	        33	70001
+503	ushasri 	45	33001
+504	ravi	        29	5001
+505	srilatha	36	50001
+506	nani	        33	60001
+507	vasu	        34	9000
+
+desc works;
+eid	int	NO	PRI		
+did	int	YES			
+experience	int	YES
+
+
+select * from works;
+eid    did      experience
+501	1	1
+502	2	14
+503	1	3
+504	3	10
+505	3	15
+506	3	19
+507	1	7
+
+
+desc dept;
+
+did	int	NO	PRI		
+dname	varchar(45)	YES			
+budget	decimal(8,2)	YES	
+managerid	int	YES			
+
+2-->select * from dept;
+      did      dname          budget          managerid
+         1	sales	        56009.55	401
+         2	data analysts	789000.99	402
+        3	clerks	        40000.55	403
+
+3-->sel					
+4-->select ename,salary from emp;
+    ename      salary
+    aasritha	40000
+    aakash	70001
+    ushasri	33001
+    ravi	5001
+    srilatha	50001
+    nani	60001
+    vasu	9000
+
+
+5-->select eid,sum(salary) from emp;
+     eid   salary
+     501   267005
+   
+	
+
+6-->select ename,salary*12 as annualsalary from emp;
+     ename   annualsalary
+     aakash	840012
+     aasritha	480000
+     nani	720012
+     ravi	60012
+    srilatha	600012
+    ushasri	396012
+    vasu	108000 
+
+7-->select * from emp,works where emp.eid=works.eid and works.did=1;
+      ename     age     eid     salary  eid     did     experience
+      aasritha	22	501	40000	501	1	1
+      ushasri	45	503	33001	503	1	3
+      vasu	34	507	9000	507	1	7
+
+ 9--> select ename,eid from emp where salary>35000;
+       ename         eid
+       aasritha      501
+       aakash	     502
+       srilatha	     505
+       nani	     506
+	
+ 10-->select ename,eid from emp where salary<35000;
+           ename       eid
+          ushasri	503
+          ravi	       504
+          vasu	        507
+
+11-->select * from  emp ,works,dept where emp.eid=works.eid and (dept.dname='clerks' or dept.dname='sales' or dept.dname='data analysts' )and emp.salary>40000;
+         
+         502	aakash	33	70001	502	2	14	3	clerks	40000.55	403
+         502	aakash  33	70001	502	2	14	2	data analysts	789000.99	402
+         502	aakash	33	70001	502	2	14	1	sales	56009.55	401
+         505	srilatha	36	50001	505	3	15	3	clerks	40000.55	403
+          505	srilatha	36	50001	505	3	15	2	data analysts	789000.99	402
+        505	srilatha	36	50001	505	3	15	1	sales	56009.55	401
+         506	nani	33	60001	506	3	19	3	clerks	40000.55	403
+          506	nani	33	60001	506	3	19	2	data analysts	789000.99	402
+         506	nani	33	60001	506	3	19	1	sales	56009.55	401
+	
+12-->select * from emp,works where  emp.eid=works.eid and works.experience>=5;
+       eid      ename    age     salary  eid    did     experience
+       502	aakash	 33	70001	502	2	14
+       504	ravi	 29	5001	504	3	10
+       505	srilatha 36	50001	505	3	15
+       506	nani	 33	60001	506	3	19
+       507	vasu	 34	9000	507	1	7
+
+14-->select curdate();
+     curdate()
+     2022-10-19
+      
+16--> show tables;
+       tables_in_company
+       dept
+       emp
+       works
+
+18-->select * from emp,dept where dept.did=1 or dept.did=2 or ( dept.dname='sales' or dept.dname='data analysts' ); 
+
+      501	aasritha	22	40000	2	data analysts	789000.99	402
+     501	aasritha	22	40000	1	sales	56009.55	401
+     502	aakash	33	70001	2	data analysts	789000.99	402
+     502	aakash	33	70001	1	sales	56009.55	401
+     503	ushasri	45	33001	2	data analysts	789000.99	402
+     503	ushasri	45	33001	1	sales	56009.55	401
+     504	ravi	29	5001	2	data analysts	789000.99	402
+     504	ravi	29	5001	1	sales	56009.55	401
+     505	srilatha	36	50001	2	data analysts	789000.99	402
+     505	srilatha	36	50001	1	sales	56009.55	401
+
+19-->select ename from emp where ename like 's%';
+      ename
+      srilatha
+
+20-->select ename from emp where ename like '%s';
+      ename
+
+
+21--->select ename from emp where ename like '_A%';
+     ename
+     aakash
+     aasritha
+     nani
+     ravi
+     vasu
+
+
+
+					
+			

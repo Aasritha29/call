@@ -1,0 +1,142 @@
+//springboot 
+package calls.controller;
+
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+@CrossOrigin("*")
+@RestController
+public class DemoController { 
+	@GetMapping("/testGet")
+	public String testGet() {
+		System.out.println("Get request received");
+		return "Get request received";
+	}
+	
+	@PostMapping("/testPost")
+	public String testPost(@RequestBody String data) {
+		System.out.println("Post request received : "+data);
+		return "Post request received : "+data;
+	}
+	
+	@PostMapping("/testForm")
+	public String testForm(@RequestBody String formData) {
+		System.out.println("Form data received : "+formData);
+		return "Post request received : "+formData;
+	}
+}
+
+
+//react
+import axios from 'axios'
+import { useState } from 'react'
+
+function App() {
+  //get request
+  const handleGetClick = async() => {
+    const resp = await axios.get("http://localhost:8080/testGet");
+    console.log(resp)
+  }
+
+  //post request along with data
+  const data = "hello"
+  const handlePostClick = async() => {
+    const resp = await axios.post("http://localhost:8080/testPost", {data});
+    console.log(resp)
+  }
+
+  //post request along with form data
+  const [formData, setFormData] = useState('')
+  const handleFormSubmit = async() => {
+    const resp = await axios.post("http://localhost:8080/testForm", {formData});
+    console.log(resp)
+  }
+return (
+    <div>
+      <button onClick={handleGetClick}>Test GET</button>
+      <br></br><br></br>
+      <button onClick={handlePostClick}>Test POST</button>
+      <br></br><br></br>
+
+      <form onSubmit={handleFormSubmit}>
+          <input type='text'
+                 name='formData'
+                 value={formData}
+                 onChange = { (e) => setFormData(e.target.value) }
+          />
+          <input type='submit' value='Test FORM' />
+      </form>
+
+    </div>
+  );
+}
+
+export default App;
+
+
+
+//forms
+import axios from 'axios'
+import { useState } from 'react'
+
+function Forms() {
+
+  //post request along with form data
+  const [username, setUsername] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+
+  const handleFormSubmit = async() => {
+    const resp = await axios.post("http://localhost:8080/sendFormData", 
+                                {username, email, password});
+    console.log(resp)
+  }
+
+return (
+    <div>
+      <form onSubmit={handleFormSubmit}>
+          <label>Username : </label>
+          <input type='text'
+                 name='username'
+                 value={username}
+                 onChange = { (e) => setUsername(e.target.value) }
+          />
+          <br></br><br></br>
+          <label>Email : </label>
+          <input type='text'
+                 name='email'
+                 value={email}
+                 onChange = { (e) => setEmail(e.target.value) }
+          />
+
+<br></br><br></br>
+          <label>Password : </label>
+          <input type='text'
+                 name='password'
+                 value={password}
+                 onChange = { (e) => setPassword(e.target.value) }
+          />
+          <br></br><br></br>
+          <input type='submit' value='SUBMIT FORM' />
+      </form>
+
+    </div>
+  );
+}
+
+export default Forms;
+
+
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import Forms from './forms';
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+    <Forms />
+  </React.StrictMode>
+);
